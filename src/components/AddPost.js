@@ -12,6 +12,9 @@ import JoditEditor from 'jodit-react'
 import { loadAllCategories } from '../services/category-service'
 
 const AddPost = () => {
+  const config = {
+    placeholder: 'Start typing ...',
+  }
   const editor = useRef(null)
   const [content, setContent] = useState('')
 
@@ -53,6 +56,7 @@ const AddPost = () => {
               <JoditEditor
                 ref={editor}
                 value={content}
+                config={config}
                 onChange={(newContent) => setContent(newContent)}
               />
             </div>
@@ -78,6 +82,7 @@ const AddPost = () => {
               </Button>
             </Container>
           </Form>
+          {content}
         </CardBody>
       </Card>
     </div>
