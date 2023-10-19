@@ -8,6 +8,7 @@ import {
   Input,
   Label,
 } from 'reactstrap'
+import { toast } from "react-toastify";
 import JoditEditor from 'jodit-react'
 import { loadAllCategories } from '../services/category-service'
 import { createPost as doCreatePost } from '../services/post-service'
@@ -35,7 +36,6 @@ const AddPost = () => {
     setUser(getCurrentUserDetail())
     loadAllCategories()
       .then((data) => {
-        console.log(data)
         setCategories(data)
       })
       .catch((error) => {
@@ -56,35 +56,37 @@ const AddPost = () => {
 
   const createPost = (e) => {
     e.preventDefault()
-    console.log(post)
     if (post.title.trim() === '') {
-      alert('Post title is required')
+      toast.error('Post title is required')
       return
     }
     if (post.content.trim() === '') {
-      alert('Post content is required')
+      toast.error('Post content is required')
       return
     }
     if (post.categoryId === '') {
-      alert('Select some category')
+      toast.error('Select some category')
       return
     }
     post['userId'] = user.id
     doCreatePost(post)
       .then((data) => {
-        alert('Post created')
-        console.log(post)
+        toast.success('Post created')
+        setPost({
+          title: '',
+          content: '',
+          categoryId: ''
+        })
       })
       .catch((error) => {
-        alert('error')
-        console.log(error)
+        console.log(error);
+        toast.error('Post not created due to some error !!!')
       })
   }
   return (
     <div className="wrapper">
       <Card className="shadow mt-3">
         <CardBody>
-          {JSON.stringify(post)}
           <h3> what's going on in your mind?</h3>
           <Form onSubmit={createPost}>
             <div className="my-3">
@@ -133,7 +135,7 @@ const AddPost = () => {
                       key={category.categoryId}
                       value={category.categoryId}
                     >
-                      {category.categoryName}
+                      {category.categoryTitle}
                     </option>
                   )
                 })}

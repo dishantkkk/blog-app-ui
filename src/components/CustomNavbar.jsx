@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { NavLink as ReactLink, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from "react";
+import { NavLink as ReactLink, useNavigate } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -12,21 +12,21 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-} from 'reactstrap'
-import { doLogout, getCurrentUserDetail, isLoggedIn } from '../auth'
+} from "reactstrap";
+import { doLogout, getCurrentUserDetail, isLoggedIn } from "../auth";
 
 const CustomNavbar = () => {
-  const navigate = useNavigate()
-  const [isOpen, setIsOpen] = useState(false)
-  const toggle = () => setIsOpen(!isOpen)
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen(!isOpen);
 
-  const [login, setLogin] = useState(false)
-  const [user, setUser] = useState(undefined)
+  const [login, setLogin] = useState(false);
+  const [user, setUser] = useState(undefined);
 
   useEffect(() => {
-    setLogin(isLoggedIn)
-    setUser(getCurrentUserDetail())
-  }, [login])
+    setLogin(isLoggedIn);
+    setUser(getCurrentUserDetail());
+  }, [login]);
 
   return (
     <div>
@@ -43,7 +43,7 @@ const CustomNavbar = () => {
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={ReactLink} to="/about/">
+              <NavLink tag={ReactLink} to="/about">
                 About
               </NavLink>
               {/* using this will reload whole page which we don't want so we use
@@ -90,10 +90,11 @@ const CustomNavbar = () => {
                 </NavItem>
                 <NavItem>
                   <NavLink
+                    tag={ReactLink}
                     onClick={() =>
                       doLogout(() => {
-                        setLogin(false)
-                        navigate('/')
+                        setLogin(false);
+                        navigate("/");
                       })
                     }
                   >
@@ -120,7 +121,7 @@ const CustomNavbar = () => {
         </Collapse>
       </Navbar>
     </div>
-  )
-}
+  );
+};
 
-export default CustomNavbar
+export default CustomNavbar;

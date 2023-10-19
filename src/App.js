@@ -16,6 +16,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import UserDashboard from './pages/user-routes/UserDashboard'
 import PrivateRoute from './components/PrivateRoute'
 import ProfileInfo from './pages/user-routes/ProfileInfo'
+import PostPage from './pages/PostPage'
+import UserProvider from './context/UserProvider'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,6 +27,7 @@ const router = createBrowserRouter(
       <Route path="/signup" element={<Signup />} />
       <Route path="/about" element={<About />} />
       <Route path="/services" element={<Services />} />
+      <Route path="/posts/:postId" element={<PostPage />} />
       <Route path="/user" element={<PrivateRoute />}>
         <Route path="dashboard" element={<UserDashboard />} />
         <Route path="profile-info" element={<ProfileInfo />} />
@@ -34,10 +37,10 @@ const router = createBrowserRouter(
 )
 const App = () => {
   return (
-    <>
+    <UserProvider>
       <ToastContainer position="bottom-center" />
       <RouterProvider router={router} />
-    </>
+    </UserProvider>
   )
 }
 
