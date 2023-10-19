@@ -11,7 +11,7 @@ import {
 import { toast } from "react-toastify";
 import JoditEditor from 'jodit-react'
 import { loadAllCategories } from '../services/category-service'
-import { createPost as doCreatePost } from '../services/post-service'
+import { createPost as doCreatePost, uploadPostImage } from '../services/post-service'
 import { getCurrentUserDetail } from '../auth'
 const AddPost = () => {
   //   const config = useMemo(
@@ -26,6 +26,7 @@ const AddPost = () => {
   const editor = useRef(null)
   //   const [content, setContent] = useState('')
 
+  const [image, setImage] = useState(null)
   const [post, setPost] = useState({
     title: '',
     content: '',
@@ -71,6 +72,12 @@ const AddPost = () => {
     post['userId'] = user.id
     doCreatePost(post)
       .then((data) => {
+        uploadPostImage(image, data.postId).then(data => {
+          toast.success("Image Uploaded")
+        }).catch(error => {
+          toast.error("Error in uploading image")
+          console.log(error)
+        })
         toast.success('Post created')
         setPost({
           title: '',
@@ -82,6 +89,10 @@ const AddPost = () => {
         console.log(error);
         toast.error('Post not created due to some error !!!')
       })
+  }
+  const handleFileChange = (e) => {
+    console.log(e.target.files[0]);
+    setImage(e.target.files[0])
   }
   return (
     <div className="wrapper">
@@ -115,6 +126,10 @@ const AddPost = () => {
                 // config={config}
                 onChange={contentFieldChanged}
               />
+            </div>
+            <div className="mt-3">
+              <Label for='image'>Select Post Banner</Label>
+              <Input type='file' id='image' onChange={handleFileChange} />
             </div>
             <div className="my-3">
               <Label for="category">Post Category</Label>

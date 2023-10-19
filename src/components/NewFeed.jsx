@@ -62,8 +62,7 @@ const NewFeed = () => {
       <Row>
         <Col
           md={{
-            size: 10,
-            offset: 1,
+            size: 12,
           }}
         >
           <h1>Total Blogs: {postContent?.totalElements}</h1>

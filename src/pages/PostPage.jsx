@@ -54,7 +54,9 @@ const PostPage = () => {
           ...post,
           comments: [...post.comments, data.data],
         });
-        setComment("");
+        setComment({
+          content: "",
+        });
       })
       .catch((error) => {
         console.log(error);

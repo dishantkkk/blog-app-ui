@@ -14,7 +14,7 @@ const Post = ({
         <h3>{post.title}</h3>
         <CardText
           dangerouslySetInnerHTML={{
-            __html: post.content.substring(0, 1500) + ".....",
+            __html: post.content.substring(0, 100) + ".....",
           }}
         />
         <div>

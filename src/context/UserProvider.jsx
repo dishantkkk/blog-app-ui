@@ -11,7 +11,7 @@ const UserProvider = ({ children }) => {
     setUser({
       name: "Deepu",
     });
-  });
+  }, []);
 
   return <userContext.Provider value={user}>{children}</userContext.Provider>;
 };
