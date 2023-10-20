@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Base from '../components/Base'
 import {
   Button,
@@ -16,8 +16,11 @@ import { Form, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { loginUser } from '../services/user-service'
 import { doLogin } from '../auth'
+import userContext from '../context/userContext'
 
 const Login = () => {
+
+  const userContextData = useContext(userContext)
   const navigate = useNavigate()
   const [loginDetail, setLoginDetail] = useState({
     username: '',
@@ -46,6 +49,10 @@ const Login = () => {
         console.log(data)
         doLogin(data, () => {
           console.log('details saved to localStorage')
+          userContextData.setUser({
+            data: data.user,
+            login: true
+          })
           navigate('/user/dashboard')
         })
         toast.success('Login success!')

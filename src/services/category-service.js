@@ -1,6 +1,5 @@
 import { myAxios } from './helper'
 
-export const loadAllCategories = async () => {
-  const response = await myAxios.get('/categories/')
-  return response.data
+export const loadAllCategories = () => {
+  return myAxios.get('/categories/').then(response => response.data)
 }

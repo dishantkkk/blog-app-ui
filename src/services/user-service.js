@@ -10,3 +10,7 @@ export const loginUser = async (loginDetail) => {
   const response = await myAxios.post('/auth/login', loginDetail)
   return response.data
 }
+
+export const getUser = (userId) => {
+  return myAxios.get(`/users/${userId}`).then(response => response.data)
+}

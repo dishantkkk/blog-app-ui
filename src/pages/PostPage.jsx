@@ -34,7 +34,7 @@ const PostPage = () => {
         console.log(error);
         toast.error("Error in loading post !!!");
       });
-  }, []);
+  }, [postId]);
 
   const submitPostComment = () => {
     console.log(isLoggedIn());

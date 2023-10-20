@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { loadAllPosts } from "../services/post-service";
+import { doDeletePost, loadAllPosts } from "../services/post-service";
 import {
   Col,
   Container,
@@ -14,6 +14,8 @@ import { toast } from "react-toastify";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const NewFeed = () => {
+
+  
   const [postContent, setPostContent] = useState({
     content: [],
     totalPages: "",
@@ -53,10 +55,28 @@ const NewFeed = () => {
       });
   };
 
+  const deletePost = (post) => {
+    doDeletePost(post.postId)
+      .then((res) => {
+        console.log(res);
+        toast.success("Post is deleted...");
+
+        let newPostContents = postContent.content.filter(
+          (p) => p.postId != post.postId
+        );
+        setPostContent({ ...postContent, content: newPostContents });
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Error in deleting post !!!");
+      });
+  };
+
   const changePageInfinite = () => {
     console.log("page changed");
     setCurrentPage(currentPage + 1);
   };
+
   return (
     <div className="container-fluid">
       <Row>
@@ -79,7 +99,7 @@ const NewFeed = () => {
             }
           >
             {postContent.content.map((post, index) => (
-              <Post post={post} key={index} />
+              <Post deletePost={deletePost} post={post} key={index} />
             ))}
           </InfiniteScroll>
 

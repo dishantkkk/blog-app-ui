@@ -19,6 +19,7 @@ import ProfileInfo from './pages/user-routes/ProfileInfo'
 import PostPage from './pages/PostPage'
 import UserProvider from './context/UserProvider'
 import Categories from './pages/Categories'
+import UpdateBlog from './pages/UpdateBlog'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,7 +33,8 @@ const router = createBrowserRouter(
       <Route path="/categories/:categoryId" element={<Categories />} />
       <Route path="/user" element={<PrivateRoute />}>
         <Route path="dashboard" element={<UserDashboard />} />
-        <Route path="profile-info" element={<ProfileInfo />} />
+        <Route path="profile-info/:userId" element={<ProfileInfo />} />
+        <Route path="update-blog/:blogId" element={<UpdateBlog />} />
       </Route>
     </Route>
   )
